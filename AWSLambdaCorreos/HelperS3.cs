@@ -10,10 +10,7 @@ namespace AWSLambdaCorreos
 {
     public class HelperS3
     {
-        //EL NOMBRE DEL BUCKET LO INCLUIREMOS DENTRO DE 
-        //APPSETTINGS.JSON
         private string BucketName;
-        //S3 TRABAJA CON UNA INTERFACE LLAMADA IAmazonS3
         private IAmazonS3 ClientS3;
         public HelperS3(IAmazonS3 ClientS3, string bucketName)
         {
@@ -21,8 +18,6 @@ namespace AWSLambdaCorreos
             this.BucketName = bucketName;
         }
 
-        //COMENZAMOS SUBIENDO FICHEROS AL BUCKET
-        //NECESITAMOS FileName, Stream y un Key/Value
         public async Task<bool>
             UploadFileAsync(string fileName, Stream stream)
         {
@@ -32,8 +27,7 @@ namespace AWSLambdaCorreos
                 Key = fileName,
                 BucketName = this.BucketName
             };
-            //DEBEMOS OBTENER UNA RESPUESTA CON EL MISMO TIPO 
-            //DE REQUEST
+
             PutObjectResponse response = await
                 this.ClientS3.PutObjectAsync(request);
             if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
@@ -46,7 +40,6 @@ namespace AWSLambdaCorreos
             }
         }
 
-        //ELIMINAMOS FICHEROS DEL BUCKET
         public async Task<bool> DeleteFileAsync(string fileName)
         {
             DeleteObjectResponse response =
@@ -61,7 +54,6 @@ namespace AWSLambdaCorreos
             }
         }
 
-        //METODO PARA RECUPERAR LAS VERSIONES DE UN FILE
         public async Task<List<string>> GetVersionsFilesAsync()
         {
             ListVersionsResponse response =
@@ -71,7 +63,6 @@ namespace AWSLambdaCorreos
             return versiones;
         }
 
-        //METODO PARA RECUPERAR UN FILE POR CODIGO
         public async Task<Stream> GetFileAsync(string fileName)
         {
             GetObjectResponse response =
