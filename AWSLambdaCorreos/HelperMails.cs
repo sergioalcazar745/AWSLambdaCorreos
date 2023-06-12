@@ -58,7 +58,7 @@ namespace MVCApiExtraSlice.Helpers
             string user = this.model.User;
             string password = this.model.Password;
             string host = this.model.Host;
-            int port = this.model.Port;
+            int port = 587;
             bool enableSSL = this.model.EnableSsl;
             bool defaultCredentials = this.model.DefaultCredentials;
             SmtpClient client = new SmtpClient();
